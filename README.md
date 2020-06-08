@@ -49,6 +49,33 @@
         LOGIN_URL = '/accounts/login/'
         LOGIN_REDIRECT_URL = '/'
 
-13. pip3 freeze > requirements.txt
-14. mkdir templates
-15. mkdir templates/allauth
+13. **pip3 freeze > requirements.txt**
+14. **mkdir templates**
+15. **mkdir templates/allauth**
+16. **cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates/allauth/** *this will copy every single allauth template so we can customize them.*
+17. delete **openid** and **tests** from *templates/allauth* folder
+18. **touch templates/base.html**
+19. use Boostrap *Starter Template* from - **https://getbootstrap.com/docs/4.5/getting-started/introduction/**
+20. change newly added templates/base.html to: 
+
+        <!doctype html>
+        {% load static %}
+
+        <html lang="en">
+        <head>
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+            
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        
+            <title>E-Store</title>
+        </head>
+        <body>
+
+        </body>
+        </html>
