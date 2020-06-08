@@ -110,4 +110,45 @@
         </body>
         </html>
 
-21. order blocks into
+21. **python3 manage.py startapp home**
+22. **mkdir -p home/templates/home**
+23. **touch home/templates/home/index.html** *-then add in index.html:*
+
+        <!doctype html>
+        {% extends "base.html" %}
+        {% load static %}
+
+        {% block content %}
+            <h1 class="display-4 text-success">It works!</h1>
+        {% endblock %}
+
+24. in home/views.py add:
+
+        def index(request):
+            """ A view to return the index page """
+            return render(request, 'home/index.html')
+
+25. touch home/urls.py and add:
+
+        from django.contrib import admin
+        from django.urls import path
+        from .import views
+
+        urlpatterns = [
+            path('', views.index, name='home')
+        ]
+
+26. go to botique_ado/urls.py and add a path to urlpatterns:
+
+        path('', include('home.urls')),
+
+27. go to botique_ado/settings.py and add to INSTALLED_APPS:
+
+        'home',
+
+    then in TEMPLATES inside DIRS add:
+
+        os.path.join(BASE_DIR, 'templates'),
+        os.path.join(BASE_DIR, 'templates', 'allauth'),
+
+28. 
