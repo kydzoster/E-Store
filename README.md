@@ -31,9 +31,24 @@
 
 9. inside urls.py create a new path inside urlpatterns:
 
-        path('accounts', include('allauth.urls'))
+        path('accounts/', include('allauth.urls'))
 
     and import **include** from **django.urls**
 
 10. **python3 manage.py migrate**
 11. *run server - **python3 manage.py runserver**, then in address bar at the end type **/admin**, when promted log-in, click on **sites**, click on **example.com**, change Domain Name to **botiqueado.example.com** and change Display name to E-Store*
+12. In settings.py under SITE_ID add:
+
+        EMAIL_BACKEND = 'django.core.email.backends.console.EmailBackend'
+
+        ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+        ACCOUNT_EMAIL_REQUIRED = True
+        ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+        ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+        ACCOUNT_USERNAME_MIN_LENGTH = 4
+        LOGIN_URL = '/accounts/login/'
+        LOGIN_REDIRECT_URL = '/'
+
+13. pip3 freeze > requirements.txt
+14. mkdir templates
+15. mkdir templates/allauth
