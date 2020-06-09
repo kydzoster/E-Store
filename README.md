@@ -151,4 +151,23 @@
         os.path.join(BASE_DIR, 'templates'),
         os.path.join(BASE_DIR, 'templates', 'allauth'),
 
-28. 
+28. Add content in **index.html** and **base.html**
+29. **mkdir static** is for css, js and other static files, then **mkdir static/css** and then **mkdir media** which will hold images.
+30. **touch static/css/base.css**
+31. under STATIC_URL add:
+
+        STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+        MEDIA_URL = '/media/'
+        MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+32. for jango to see these urls, go to botique_ado/urls.py and import:
+
+        from django.conf import settings
+        from django.conf.urls.static import static
+
+    and add at the end of the urlpatterns:
+
+        urlpatterns = [
+            ...
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
