@@ -32,7 +32,82 @@
     <title>E-Store {% block extra_title %}{% endblock %}</title>
   </head>
   <body>
-    <header class="container-fluid fixed-top"></header>
+    <header class="container-fluid fixed-top">
+        <div class="row">
+        <!--stack vertically except on large and extra large screens.
+         Vertically cntered with top and bottom padding on small screens.
+         Logo centered by default, but left-aligned on large and extralarge screens-->
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-o text-center text-lg-left">
+                <a href="{% url 'home' %}" class="nav-link main-logo-link">
+                    <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
+                </a>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-o">
+                <!-- GET will work for submiting search -->
+                <form method="GET" action="">
+                    <!-- input group with 100% width -->
+                    <div class="input-group w-100">
+                        <!-- this input is in a text format and a name of q for query, this will be submited to the action url -->
+                        <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
+                        <div class="input-group-append">
+                            <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+                                <span class="icon">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-o">
+                <ul class="list-inline list-unstyled text-center text-lg-right my-0">
+                    <li class="list-inline-item dropdown">
+                        <!--data-toggle will link to a bootstrap JS and will open a drop-down menu when clicked-->
+                        <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <div>
+                                    <i class="fas fa-user fa-lg"></i>
+                                </div>
+                                <p class="my-0">My Account</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_superuser %}
+                                    <a class="dropdown-item" href="">Product Management</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="">My Profile</a>
+                                <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
+                                <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>    
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="list-inline-item">
+                        <!--if something is in the bag, font will be bold-->
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %}nav-link" href="">
+                            <div class="text-center">
+                                <div>
+                                    <i class="fas fa-shopping-bag fa-lg"></i>
+                                </div>
+                                <p class="my-0">
+                                    <!--This will check if there is grand total-->
+                                    {% if grand_total %}
+                                        <!--if it is it will display it and format into 2 decimal places-->
+                                        ${{ grand_total|floatform:2 }}
+                                    {% else %}
+                                        <!--if its not, it will display 0-->
+                                        $0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
     {% if messages %}
         <div class="message-container"></div>
