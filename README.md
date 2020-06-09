@@ -171,3 +171,8 @@
         urlpatterns = [
             ...
         ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+33. **mkdir templates/includes**
+34. **touch templates/includes/main-nav.html** then copy content from *https://github.com/ckz8780/boutique_ado_v1/blob/e77fa8e928e3901d3502b18e912e90d2204b8ec3/templates/includes/main-nav.html*
+35. **touch templates/includes/mobile-top-header.html** then copy content from *https://github.com/ckz8780/boutique_ado_v1/blob/e77fa8e928e3901d3502b18e912e90d2204b8ec3/templates/includes/mobile-top-header.html*
+36. 
