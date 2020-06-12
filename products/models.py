@@ -4,6 +4,11 @@ from django.db import models
 
 
 class Category(models.Model):
+
+    # this will fix spelling issue and make it plural
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     name = models.CharField(max_length=254)
     # null in DB and blank in form, because each product requires a name,
     # description and a price, but null and blank will be optional

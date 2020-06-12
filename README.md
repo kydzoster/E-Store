@@ -220,4 +220,34 @@
         admin.site.register(Category)
 
 46. **python3 manage.py loaddata categories** then **python3 manage.py loaddata products** to use fixtures
-47. runserver and then in address bar add: **/admin/products/product** to view
+47. runserver and then in address bar add: **/admin/products/product** to view them.
+48. products/models.py add a meta class inside Category(..):
+
+        # this will fix spelling issue and make it plural
+        class Meta:
+            verbose_name_plural = 'Categories'
+
+49. products/admin.py create 2 classes:
+
+        class ProductAdmin(admin.ModelAdmin):
+            list_display = (
+                'sku',
+                'name',
+                'category',
+                'price',
+                'rating',
+                'image',
+            )
+
+            ordering = ('sku',)
+
+        class CategoryAdmin(admin.ModelAdmin):
+            list_display = (
+                'friendly_name',
+                'name',
+            )
+
+        admin.site.register(Product, ProductAdmin)
+        admin.site.register(Category, CategoryAdmin)
+
+50. 
