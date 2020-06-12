@@ -323,4 +323,7 @@
         path('<product_id>', views.product_detail, name='product_detail'),
 
 57. duplicate **products.html** and rename it to **product_detail.html**
-58. 
+58. products/views.py inside all_products add if request:
+
+        if request.GET:
+            
