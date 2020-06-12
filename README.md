@@ -323,7 +323,28 @@
         path('<product_id>', views.product_detail, name='product_detail'),
 
 57. duplicate **products.html** and rename it to **product_detail.html**
-58. products/views.py inside all_products add if request:
+58. products/views.py replace all_products:
 
-        if request.GET:
-            
+        def all_products(request):
+            """ This will show all products, searches and sorting """
+            products = Product.objects.all()
+            query = None
+
+            if request.GET:
+                if 'q' in request.GET:
+                    query = request.GET['q']
+                    if not query:
+                        messages.error(request, "You did not enter any search criteria!")
+                        return redirect(reverse('products'))
+
+                    queries = Q(name__icontains=query) | Q(description__icontains=query)
+                    products = products.filter(queries)
+
+            context = {
+                'products': products,
+                'search_term': query,
+            }
+
+            return render(request, 'products/products.html', context)
+
+59. 
