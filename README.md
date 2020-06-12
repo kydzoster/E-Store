@@ -175,4 +175,49 @@
 33. **mkdir templates/includes**
 34. **touch templates/includes/main-nav.html** then copy content from *https://github.com/ckz8780/boutique_ado_v1/blob/e77fa8e928e3901d3502b18e912e90d2204b8ec3/templates/includes/main-nav.html*
 35. **touch templates/includes/mobile-top-header.html** then copy content from *https://github.com/ckz8780/boutique_ado_v1/blob/e77fa8e928e3901d3502b18e912e90d2204b8ec3/templates/includes/mobile-top-header.html*
-36. 
+36. **python3 manage.py startapp products**
+37. *add this app to botique_ado/settings.py inside INSTALLED_APPS:*
+
+        products
+
+38. **mkdir products/fixtures** *- fixtures are used to load data into django DB so we do not have to do it manually in the admin*
+39. *use **jsonformatter.org** to neatly organise JSON output in fixtures folder.*
+40. products/models.py add a new classes:
+
+        class Category(models.Model):
+            name = models.CharField(max_length=254)
+            # null in DB and blank in form
+            friendly_name = models.CharField(max_length=254, null=True, blank=True)
+
+            def __str__(self):
+                return self.name
+
+            def get_friendly_name(self):
+                return self.friendly_name
+
+        class Product(models.Model):
+            category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+            sku = models.CharField(max_length=254, null=True, blank=True)
+            name = models.CharField(max_length=254)
+            description = models.TextField()
+            price = models.DecimalField(max_digits=6, decimal_places=2)
+            rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+            image_url = models.URLField(max_length=1024, null=True, blank=True)
+            image = models.ImageField(null=True, blank=True)
+
+            def __str__(self):
+                return self.name
+
+41. check **test run** aka **dry run** to make sure if everything is okay. **python3 manage.py makemigrations --dry-run**
+42. it returned error for image field, so we will install pillow. **pip3 install pillow** then dry-run again.
+43. it cam back with no errors, we can run real migrations. **python3 manage.py makemigrations**
+44. **python3 manage.py migrate** - to migrate all apps, however, it is better to migrate specific app to avoid unintentionall migrations of unwanted apps.
+45. products/admin.py and add:
+
+        from .models import Product, Category
+
+        admin.site.register(Product)
+        admin.site.register(Category)
+
+46. **python3 manage.py loaddata categories** then **python3 manage.py loaddata products** to use fixtures
+47. runserver and then in address bar add: **/admin/products/product** to view
