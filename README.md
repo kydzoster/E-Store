@@ -302,4 +302,25 @@
             </div>
         {% endblock %}
 
-55. 
+55. products/views.py add an import to django.shortcuts:
+
+        get_object_or_404
+
+    and define product_detail:
+
+        def product_detail(request, product_id):
+        """ A view to show individual product details """
+        product = get_object_or_404(Product, pk=product_id)
+
+        context = {
+            'product': product,
+        }
+
+        return render(request, 'products/product_detail.html', context)
+
+56. products/urls.py add new path:
+
+        path('<product_id>', views.product_detail, name='product_detail'),
+
+57. duplicate **products.html** and rename it to **product_detail.html**
+58. 
