@@ -250,4 +250,56 @@
         admin.site.register(Product, ProductAdmin)
         admin.site.register(Category, CategoryAdmin)
 
-50. 
+50. products/views.py:
+
+        from django.shortcuts import render
+        from .models import Product
+
+        def all_products(request):
+            """ This will show all products, searches and sorting """
+            products = Product.objects.all()
+
+            context = {
+                'products': products,
+            }
+
+            return render(request, 'products/products.html', context)
+
+51. **touch products/urls.py** then add:
+
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('', views.all_products, name='products')
+        ]
+
+52. botique_ado/urls.py add newly created path:
+
+        path('products/', include('products.urls')),
+
+53. **mkdir -p products/templates/products**
+54. **touch products/templates/products/products.html** and add:
+
+        {% extends "base.html" %}
+        {% load static %}
+
+        {% block page_header %}
+            <div class="container header-container">
+                <div class="row">
+                    <div class="col"></div>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block content %}
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        {{ products }}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+55. 
