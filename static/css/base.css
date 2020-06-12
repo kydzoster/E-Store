@@ -65,6 +65,18 @@ body{
     background: #000 !important;
 }
 
+/*This will be 100% height and width div. Fixed at the top-left screen. 
+with white background and -1 z-index so it sits behind all the content*/
+.overlay{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: white;
+    z-index: -1;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
