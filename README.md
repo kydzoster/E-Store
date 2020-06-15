@@ -351,4 +351,5 @@
 
         from django.db.models.functions import Lower
 
-60. 
+60. **python3 manage.py startapp bag** and add it to botique_ado/settings.py
+61. ...
