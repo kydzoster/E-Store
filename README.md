@@ -347,4 +347,8 @@
 
             return render(request, 'products/products.html', context)
 
-59. 
+59. for javascript to work on products.html with not only sorting by numbers but also by names in the products/views.py need to import:
+
+        from django.db.models.functions import Lower
+
+60. 
