@@ -10,7 +10,7 @@ from .forms import ProductForm
 
 
 def all_products(request):
-    """ This will show all products, search and sort"""
+    """ A view to show all products, including sorting and search queries """
 
     products = Product.objects.all()
     query = None
@@ -19,28 +19,18 @@ def all_products(request):
     direction = None
 
     if request.GET:
-        # check if sort is in request.get
         if 'sort' in request.GET:
-            # if it is, we set it equal to both sort, which is none
             sortkey = request.GET['sort']
-            # rename sort to sortkey to use it as a fieldname
             sort = sortkey
             if sortkey == 'name':
-                # we rename sortkey to fit the field name if the user is sorting by name
                 sortkey = 'lower_name'
-                # we annotate current list of products with a new field
                 products = products.annotate(lower_name=Lower('name'))
-
             if sortkey == 'category':
                 sortkey = 'category__name'
-
-            # we check if there is a direction
             if 'direction' in request.GET:
                 direction = request.GET['direction']
-                #we check if it is descending and decide wether to reverse the order
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
-            # sort the products
             products = products.order_by(sortkey)
 
         if 'category' in request.GET:
@@ -56,7 +46,7 @@ def all_products(request):
 
             queries = Q(name__icontains=query) | Q(description__icontains=query)
             products = products.filter(queries)
-    # returns current sorting methodology to the template
+
     current_sorting = f'{sort}_{direction}'
 
     context = {
@@ -83,7 +73,17 @@ def product_detail(request, product_id):
 
 def add_product(request):
     """ Add a product to the store """
-    form = ProductForm()
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added product!')
+            return redirect(reverse('add_product'))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        form = ProductForm()
+
     template = 'products/add_product.html'
     context = {
         'form': form,
